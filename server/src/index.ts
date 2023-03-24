@@ -41,32 +41,45 @@ where books.id = ${req.params.bookId} group by books.id;`
   } catch (err) {
     console.log(err);
   }
-  console.log(req.params);
 });
 
-// app.post("/api/books", async (req: Request, res: Response) => {
-//   //   res.status(200).json({
-//   //     status: "success",
-//   //     data: { book: req.body },
-//   //   });
-//   //   console.log(req.body);
+type RequestBody = {
+  name: string;
+  details: string;
+  time_to_read: number;
+  authors: Array<string>;
+};
 
-//   try {
-//     const { item, price, record_time } = req.body;
-//     const newTrans = await pool.query(
-//       "INSERT INTO transactions (item, price, record_time) VALUES ($1, $2, $3) RETURNING *",
-//       [item, price, record_time]
-//     );
-//     res.status(200).json({
-//       status: "success",
-//       data: { book: req.body },
-//     });
-//     console.log(req.body);
-//     // res.json(newTrans.rows[0]);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+app.post("/api/books", async (req: Request, res: Response) => {
+  try {
+    const { name, details, time_to_read, authors } = <RequestBody>req.body;
+    const insertBook = await pool.query(
+      `INSERT INTO books (name,details,time_to_read) VALUES ($1, $2, $3) returning id`,
+      [name, details, time_to_read]
+    );
+    const newBookId: number = insertBook.rows[0].id;
+    const newAuthorIds: number[] = await Promise.all(
+      authors.map(async (author): Promise<number> => {
+        const res = await pool.query(
+          `INSERT INTO authors (name) VALUES ('${author}') returning id`
+        );
+        const author_id: number = res.rows[0].id;
+        return author_id;
+      })
+    );
+    newAuthorIds.map(async (author_id) => {
+      return await pool.query(
+        `INSERT INTO books_authors (book_id,author_id) VALUES ($1, $2)`,
+        [newBookId, author_id]
+      );
+    });
+    res.status(200).json({
+      status: "Successfully added new Book",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
