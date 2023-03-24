@@ -1,13 +1,19 @@
-import React from "react";
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Home from "./components/Home";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import HomePage from "./routes/HomePage";
+import Book from "./routes/Book";
+import AddBook from "./routes/AddBook";
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Home />
+      <Router>
+        <Routes>
+          <Route path="/" Component={HomePage} />
+          <Route path="/book/:bookId" Component={Book} />
+          <Route path="/addBook" Component={AddBook} />
+        </Routes>
+      </Router>
     </div>
   );
 }
