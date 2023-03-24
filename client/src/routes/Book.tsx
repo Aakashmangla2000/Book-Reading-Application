@@ -1,7 +1,16 @@
 import React from "react";
+import BookPage from "../components/BookPage";
+import { useParams } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function Book() {
-  return <div>Book</div>;
+  const params = useParams();
+  return (
+    <div>
+      <Navbar />
+      <BookPage bookId={params.bookId} />
+    </div>
+  );
 }
 
 export default Book;
