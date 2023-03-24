@@ -15,7 +15,7 @@ app.get("/", (req: Request, res: Response) => {
 app.get("/api/books", async (req: Request, res: Response) => {
   try {
     const results = await pool.query(
-      "select books.id,books.name as book_name,authors.name as author_name,details,time_to_read from books inner join books_authors on books.id = books_authors.book_id inner join authors on books_authors.author_id = authors.id"
+      `select books.id,books.name as book_name,array_agg(authors.name) as authors,details,time_to_read from books inner join books_authors on books.id = books_authors.book_id inner join authors on books_authors.author_id = authors.id group by books.id`
     );
     res.status(200).json({
       status: "success",
@@ -31,7 +31,7 @@ app.get("/api/book/:bookId", async (req: Request, res: Response) => {
   try {
     const results = await pool.query(
       `select books.id,books.name as book_name,array_agg(authors.name) as authors,details,time_to_read from books inner join books_authors on books.id = books_authors.book_id inner join authors on books_authors.author_id = authors.id
-where books.id = ${req.params.bookId} group by books.id;`
+where books.id = ${req.params.bookId} group by books.id`
     );
     res.status(200).json({
       status: "success",
