@@ -1,10 +1,12 @@
 import express, { Request, Response } from "express";
 import bodyparser from "body-parser";
 const pool = require("../db/index");
+const cors = require("cors");
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
+app.use(cors());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
@@ -22,6 +24,7 @@ app.get("/api/books", async (req: Request, res: Response) => {
       results: results.rows.length,
       data: results.rows,
     });
+    console.log("Data sent successfully");
   } catch (err) {
     console.log(err);
   }
@@ -31,7 +34,8 @@ app.get("/api/book/:bookId", async (req: Request, res: Response) => {
   try {
     const results = await pool.query(
       `select books.id,books.name as book_name,array_agg(authors.name) as authors,details,time_to_read from books inner join books_authors on books.id = books_authors.book_id inner join authors on books_authors.author_id = authors.id
-where books.id = ${req.params.bookId} group by books.id`
+        where books.id = $1 group by books.id`,
+      [req.params.bookId]
     );
     res.status(200).json({
       status: "success",
