@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import styles from "./bookPage.module.css";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 type BookPageProps = {
   bookId: string | undefined;
@@ -29,14 +30,38 @@ const BookData = (props: IProps) => {
         alt="book_cover"
       ></img>
       {props.book !== null ? (
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignContent: "flex-start",
+            marginLeft: "44px",
+          }}
+        >
           <span className={styles.bookName}>{props.book.book_name}</span>
           <span className={styles.authorName}>
-            {props.book.authors.map((author) => author)}
+            {props.book.authors.map((author) => `${author} `)}
           </span>
-          <span>Book Read Time:{props.book.time_to_read}</span>
-          <span>{props.book.details}</span>
-          <Button variant="contained">Read this book</Button>
+          <span className={styles.timeToRead}>
+            Book Read Time: {props.book.time_to_read}
+          </span>
+          <span className={styles.details}>{props.book.details}</span>
+          <Button
+            style={{
+              background: "#27378C",
+              width: "160px",
+              fontStyle: "normal",
+              fontWeight: 500,
+              fontSize: "16px",
+              lineHeight: "20px",
+              marginBottom: "24px",
+              border: "2px solid #27378C",
+              borderRadius: "8px",
+            }}
+            variant="contained"
+          >
+            Read this book
+          </Button>
         </div>
       ) : (
         ""
@@ -70,9 +95,21 @@ function BookPage(props: BookPageProps) {
   }, []);
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", margin: "70px" }}>
       <Button
+        style={{
+          color: "#27378C",
+          width: "178px",
+          fontStyle: "normal",
+          fontWeight: 500,
+          fontSize: "16px",
+          lineHeight: "20px",
+          marginBottom: "24px",
+          border: "2px solid #27378C",
+          borderRadius: "8px",
+        }}
         variant="outlined"
+        startIcon={<ArrowBackIosIcon />}
         onClick={() => {
           navigate(`/`);
         }}
