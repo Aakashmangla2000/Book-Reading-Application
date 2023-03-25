@@ -1,18 +1,13 @@
-import React, { ReactEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
-// import styles from "./bookPage.module.css";
+import styles from "./addBookPage.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
 import { redirect, useNavigate } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
 import AddIcon from "@mui/icons-material/Add";
-import { alpha, styled } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { stringify } from "querystring";
 
 type Book = {
   book_name: string;
@@ -41,32 +36,6 @@ type IProps = {
   nameOfBook: string | number | readonly string[] | undefined;
 };
 
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  "label + &": {
-    marginTop: theme.spacing(3),
-  },
-  "& .MuiInputBase-input": {
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: theme.palette.mode === "light" ? "#fcfcfb" : "#2b2b2b",
-    border: "1px solid #ced4da",
-    fontSize: 16,
-    width: "100%",
-    padding: "10px 12px",
-    transition: theme.transitions.create([
-      "border-color",
-      "background-color",
-      "box-shadow",
-    ]),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: ["-apple-system", "sans-serif"].join(","),
-    "&:focus": {
-      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-      borderColor: theme.palette.primary.main,
-    },
-  },
-}));
-
 const AddBookForm = (props: IProps) => {
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
@@ -87,7 +56,7 @@ const AddBookForm = (props: IProps) => {
               }}
             >
               <AddIcon />
-              <span>Add a Book</span>
+              <span>Add a Book Cover</span>
             </div>
           </CardContent>
         </CardActionArea>
@@ -102,21 +71,20 @@ const AddBookForm = (props: IProps) => {
         }}
       >
         <form onSubmit={props.submitBookDetails}>
-          <label>
-            Name of the Book
-            <input
-              required
-              placeholder="Enter the published name"
-              id="author-of-book"
-              style={{ width: "100%" }}
-              type="text"
-              name="name-of-book"
-              value={props.nameOfBook}
-              onChange={(event) => {
-                props.setNameOfBook(event.target.value);
-              }}
-            />
-          </label>
+          <label className={styles.inputLabel}>Name of the Book </label>
+          <input
+            className={styles.input}
+            required
+            placeholder="Enter the published name"
+            id="author-of-book"
+            style={{ width: "100%" }}
+            type="text"
+            name="name-of-book"
+            value={props.nameOfBook}
+            onChange={(event) => {
+              props.setNameOfBook(event.target.value);
+            }}
+          />
           <div
             style={{
               display: "flex",
@@ -132,8 +100,9 @@ const AddBookForm = (props: IProps) => {
                 width: "95%",
               }}
             >
-              <label>Author of the Book</label>
+              <label className={styles.inputLabel}>Author of the Book</label>
               <input
+                className={styles.input}
                 placeholder="Add all the authors comma seperated"
                 id="author-of-book"
                 style={{ width: "100%" }}
@@ -153,8 +122,9 @@ const AddBookForm = (props: IProps) => {
                 width: "95%",
               }}
             >
-              <label>Book Read Time</label>
+              <label className={styles.inputLabel}>Book Read Time</label>
               <input
+                className={styles.input}
                 placeholder="Add time in mins"
                 id="book-read-time"
                 style={{ width: "100%" }}
@@ -175,11 +145,12 @@ const AddBookForm = (props: IProps) => {
               width: "100%",
             }}
           >
-            <label>Book Details</label>
+            <label className={styles.inputLabel}>Book Details</label>
             <textarea
+              className={styles.input}
               placeholder="Should not be more than 300 words"
               id="book-details"
-              style={{ height: "142px" }}
+              style={{ height: "142px", width: "100%" }}
               rows={4}
               cols={50}
               name="details"
@@ -191,8 +162,11 @@ const AddBookForm = (props: IProps) => {
               }}
             />
           </div>
-          <label>Upload PDF</label>
-          <Card sx={{ width: "300px", height: "149px" }}>
+          <label className={styles.inputLabel}>Upload PDF</label>
+          <Card
+            className={styles.uploadPdfCard}
+            sx={{ width: "300px", height: "149px" }}
+          >
             <CardContent>
               <CloudUploadIcon />
               <span>Browse or drop file here</span>
@@ -236,7 +210,6 @@ function AddBookPage() {
   const [bookDetails, setBookDetails] = useState<
     string | number | readonly string[] | undefined
   >("");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const submitBookDetails = (event: React.FormEvent<HTMLFormElement>) => {
@@ -272,15 +245,6 @@ function AddBookPage() {
     }
   };
 
-  useEffect(() => {
-    // setLoading(true);
-    // getBookData();
-  }, []);
-
-  useEffect(() => {
-    // console.log(bookDetails, nameOfAuthor, nameOfBook, timeToRead);
-  });
-
   return (
     <div style={{ display: "flex", flexDirection: "column", margin: "70px" }}>
       <Button
@@ -303,21 +267,17 @@ function AddBookPage() {
       >
         Back to Home
       </Button>
-      {loading ? (
-        "Loading..."
-      ) : (
-        <AddBookForm
-          submitBookDetails={submitBookDetails}
-          setNameOfAuthor={setNameOfAuthor}
-          setNameOfBook={setNameOfBook}
-          setTimeToRead={setTimeToRead}
-          setBookDetails={setBookDetails}
-          nameOfAuthor={nameOfAuthor}
-          bookDetails={bookDetails}
-          timeToRead={timeToRead}
-          nameOfBook={nameOfBook}
-        />
-      )}
+      <AddBookForm
+        submitBookDetails={submitBookDetails}
+        setNameOfAuthor={setNameOfAuthor}
+        setNameOfBook={setNameOfBook}
+        setTimeToRead={setTimeToRead}
+        setBookDetails={setBookDetails}
+        nameOfAuthor={nameOfAuthor}
+        bookDetails={bookDetails}
+        timeToRead={timeToRead}
+        nameOfBook={nameOfBook}
+      />
     </div>
   );
 }

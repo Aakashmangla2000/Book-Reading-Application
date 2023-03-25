@@ -1,0 +1,40 @@
+.inputLabel {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
+}
+
+.inputLabel:after {
+  content: " *";
+  color: red;
+}
+
+.input::placeholder {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #7a7a7a;
+  opacity: 0.8;
+}
+
+.input {
+  background: #ffffff;
+  padding: 12px;
+  border: 1.5px solid #cccccc;
+  border-radius: 4px;
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 20px;
+}
+
+.uploadPdfCard {
+  margin-bottom: 20px;
+}
