@@ -29,12 +29,17 @@ export default function BookHomePage(props: HomePageBookProps) {
           />
         </CardActionArea>
       </Card>
-      <Typography gutterBottom variant="h5" component="div">
-        {props.bookName}
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        {props.authors.map((author: string) => `${author}, `)}
-      </Typography>
+      <div style={{ paddingLeft: "20px" }}>
+        <Typography gutterBottom variant="h5" component="div">
+          {props.bookName}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {props.authors.map(
+            (author: string, index: number) =>
+              `${author}` + (index === props.authors.length - 1 ? "" : ", ")
+          )}
+        </Typography>
+      </div>
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import React from "react";
+import AddBookPage from "../components/AddBookPage";
 import Navbar from "../components/Navbar";
 
 function AddBook() {
   return (
     <div>
       <Navbar />
-      AddBook
+      <AddBookPage />
     </div>
   );
 }

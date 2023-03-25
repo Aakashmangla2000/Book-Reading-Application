@@ -42,6 +42,7 @@ app.get("/api/book/:bookId", async (req: Request, res: Response) => {
       results: results.rows.length,
       data: results.rows,
     });
+    console.log("Book Data sent successfully");
   } catch (err) {
     console.log(err);
   }
@@ -77,9 +78,10 @@ app.post("/api/books", async (req: Request, res: Response) => {
         [newBookId, author_id]
       );
     });
-    res.status(200).json({
+    res.status(201).json({
       status: "Successfully added new Book",
     });
+    console.log("Successfully added new Book");
   } catch (error) {
     console.log(error);
   }

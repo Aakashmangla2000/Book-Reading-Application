@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BookHomePage from "../BookHomePage";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
+import BookIcon from "@mui/icons-material/Book";
 import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -47,8 +47,20 @@ function Home() {
           paddingLeft: "20px",
         }}
       >
-        <MenuBookIcon style={{ fontSize: "50px" }} />
-        <span style={{ fontSize: "50px" }}>My Books</span>
+        <BookIcon
+          style={{ fontSize: "50px", paddingRight: "10px", color: "#27378C" }}
+        />
+        <span
+          style={{
+            fontStyle: "normal",
+            fontWeight: 600,
+            fontSize: "40px",
+            lineHeight: "54px",
+            color: "#27378C",
+          }}
+        >
+          My Books
+        </span>
       </div>
       <div style={{ display: "flex" }}>
         {books !== null

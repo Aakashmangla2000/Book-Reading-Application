@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 const pages = [
   { name: "Home", url: "" },
-  { name: "Favourites", url: "favourites" },
+  { name: "Favourites", url: "" },
 ];
 
 function Navbar() {
@@ -35,20 +35,14 @@ function Navbar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <MenuBookIcon />
+          <MenuBookIcon style={{ color: "#27378C", paddingRight: "5px" }} />
           <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
             sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              fontStyle: "italic",
+              fontWeight: 500,
+              fontSize: "20px",
+              lineHeight: "54px",
+              color: "#27378C",
             }}
           >
             Library
@@ -107,7 +101,13 @@ function Navbar() {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{
+              flexGrow: 2,
+              display: { xs: "none", md: "flex" },
+              alignItems: "center",
+            }}
+          >
             {pages.map((page) => (
               <Button
                 key={page.name}
