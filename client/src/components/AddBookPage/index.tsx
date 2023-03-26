@@ -17,12 +17,12 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-type Book = {
-  book_name: string;
-  details: string;
-  time_to_read: number;
-  authors: Array<string>;
-};
+// type Book = {
+//   book_name: string;
+//   details: string;
+//   time_to_read: number;
+//   authors: Array<string>;
+// };
 
 type IProps = {
   submitBookDetails: React.FormEventHandler<HTMLFormElement>;
@@ -113,8 +113,22 @@ const AddBookForm = (props: IProps) => {
       // at least one file has been selected so do something
       // handleFiles(e.target.files);
       props.setBookPdf(e.target.files[0]);
+      console.log(e.target.files[0]);
+      setPdf(e.target.files[0]);
     }
   };
+
+  const checkButtonDisable = (): boolean =>
+    props.bookCover === null ||
+    props.bookDetails === undefined ||
+    props.bookDetails === "" ||
+    props.nameOfAuthor === undefined ||
+    props.nameOfAuthor === "" ||
+    props.nameOfBook === undefined ||
+    props.nameOfBook === "" ||
+    props.timeToRead === undefined ||
+    props.timeToRead === null ||
+    props.bookPdf === null;
 
   return (
     <form onSubmit={props.submitBookDetails} encType="multipart/form-data">
@@ -135,45 +149,46 @@ const AddBookForm = (props: IProps) => {
               if (uploadCoverRef.current != null)
                 uploadCoverRef.current.click();
             }}
-            disabled={image !== undefined}
           >
             <CardContent sx={{ padding: 0 }}>
-              {image !== undefined ? (
-                <div>
-                  <img
-                    alt="book-cover"
-                    src={image}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      // objectFit: "cover",
-                    }}
-                  />
-                </div>
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    color: "#27378C",
-                  }}
-                >
-                  <AddIcon sx={{ color: "#27378C", paddingBottom: "7px" }} />
-                  <span style={{ textDecoration: "underline" }}>
-                    Add a Book Cover
-                    <input
-                      type="file"
-                      name="book-cover"
-                      ref={uploadCoverRef}
-                      id="book-cover"
-                      hidden
-                      onChange={handleBookCover}
-                      accept="image/*"
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  color: "#27378C",
+                }}
+              >
+                {image !== undefined ? (
+                  <div>
+                    <img
+                      alt="book-cover"
+                      src={image}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                      }}
                     />
-                  </span>
-                </div>
-              )}
+                  </div>
+                ) : (
+                  <>
+                    <AddIcon sx={{ color: "#27378C", paddingBottom: "7px" }} />
+                    <span style={{ textDecoration: "underline" }}>
+                      Add a Book Cover
+                    </span>
+                  </>
+                )}
+
+                <input
+                  type="file"
+                  name="book-cover"
+                  ref={uploadCoverRef}
+                  id="book-cover"
+                  hidden
+                  onChange={handleBookCover}
+                  accept="image/*"
+                />
+              </div>
             </CardContent>
           </CardActionArea>
         </Card>
@@ -205,7 +220,6 @@ const AddBookForm = (props: IProps) => {
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              // width: "100%",
             }}
           >
             <div
@@ -220,7 +234,6 @@ const AddBookForm = (props: IProps) => {
                 className={styles.input}
                 placeholder="Add all the authors comma seperated"
                 id="author-of-book"
-                // style={{ width: "100%" }}
                 type="text"
                 name="authors"
                 required
@@ -340,18 +353,7 @@ const AddBookForm = (props: IProps) => {
           <button
             className={styles.addBook}
             type="submit"
-            disabled={
-              props.bookCover === null ||
-              props.bookDetails === undefined ||
-              props.bookDetails === "" ||
-              props.nameOfAuthor === undefined ||
-              props.nameOfAuthor === "" ||
-              props.nameOfBook === undefined ||
-              props.nameOfBook === "" ||
-              props.timeToRead === undefined ||
-              props.timeToRead === null ||
-              props.bookPdf === null
-            }
+            disabled={checkButtonDisable()}
           >
             <span>Add Book</span>
           </button>
