@@ -56,6 +56,7 @@
   background-color: white;
   text-decoration: underline;
   padding: 0;
+  cursor: pointer;
 }
 
 .backHomeButton {
@@ -80,6 +81,7 @@
 
 .backHomeButton:hover {
   background-color: #27388c17;
+  cursor: pointer;
 }
 
 .addBook {
@@ -103,4 +105,10 @@
 
 .addBook:hover {
   background-color: #27388cee;
+  cursor: pointer;
+}
+
+.addBook:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }

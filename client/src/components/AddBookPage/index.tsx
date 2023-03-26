@@ -1,13 +1,21 @@
 import React, { useEffect, useState, useRef, DragEvent } from "react";
-import { Button } from "@mui/material";
 import styles from "./addBookPage.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
 import AddIcon from "@mui/icons-material/Add";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 type Book = {
   book_name: string;
@@ -52,6 +60,9 @@ const AddBookForm = (props: IProps) => {
       setImage(URL.createObjectURL(event.target.files[0]));
     }
   };
+  useEffect(() => {
+    console.log(props.timeToRead);
+  });
 
   useEffect(() => {
     if (image !== undefined && pdf !== undefined) {
@@ -326,7 +337,22 @@ const AddBookForm = (props: IProps) => {
               {`File ${pdf.name} is selected`}
             </span>
           )}
-          <button className={styles.addBook} type="submit">
+          <button
+            className={styles.addBook}
+            type="submit"
+            disabled={
+              props.bookCover === null ||
+              props.bookDetails === undefined ||
+              props.bookDetails === "" ||
+              props.nameOfAuthor === undefined ||
+              props.nameOfAuthor === "" ||
+              props.nameOfBook === undefined ||
+              props.nameOfBook === "" ||
+              props.timeToRead === undefined ||
+              props.timeToRead === null ||
+              props.bookPdf === null
+            }
+          >
             <span>Add Book</span>
           </button>
         </div>
@@ -352,6 +378,9 @@ function AddBookPage() {
   const [bookPdf, setBookPdf] = useState<File | null>(null);
   const [bookCover, setBookCover] = useState<File | null>(null);
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const [severity, setSeverity] = useState<"success" | "error">("error");
+  const [message, setMessage] = useState("");
 
   const submitBookDetails = (event: React.FormEvent<HTMLFormElement>) => {
     console.log("Submit");
@@ -389,6 +418,9 @@ function AddBookPage() {
         .then((res) => res.json())
         .then((data) => {
           console.log("Book data ", data);
+          setSeverity("success");
+          setMessage("Book Added Successfully");
+          setOpen(true);
           setNameOfAuthor("");
           setBookDetails("");
           setNameOfBook("");
@@ -397,12 +429,30 @@ function AddBookPage() {
           setBookPdf(null);
         });
     } catch (err) {
+      setSeverity("error");
+      setMessage("Error! Try Again later..");
+      setOpen(true);
       console.log(err);
     }
   };
 
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", margin: "70px" }}>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+          {message}
+        </Alert>
+      </Snackbar>
       <button
         className={styles.backHomeButton}
         onClick={() => {

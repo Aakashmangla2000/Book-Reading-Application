@@ -55,6 +55,7 @@
 
 .rateButton:hover {
   background-color: #27388c17;
+  cursor: pointer;
 }
 .rateText {
   text-justify: auto;
