@@ -41,8 +41,15 @@ type IProps = {
 const AddBookForm = (props: IProps) => {
   const uploadCoverRef = useRef<HTMLInputElement>(null);
   const uploadPdfRef = useRef<HTMLInputElement>(null);
-
   const [dragActive, setDragActive] = useState(false);
+  const [image, setImage] = useState<string | undefined>(undefined);
+  const [pdf, setPdf] = useState<File | undefined>(undefined);
+
+  const onImageChange = (event: any) => {
+    if (event.target.files && event.target.files[0]) {
+      setImage(URL.createObjectURL(event.target.files[0]));
+    }
+  };
 
   // handle drag events
   const handleDrag = function (e: DragEvent<HTMLDivElement>) {
@@ -59,10 +66,13 @@ const AddBookForm = (props: IProps) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      // at least one file has been dropped so do something
-      // handleFiles(e.dataTransfer.files);
+    if (
+      e.dataTransfer.files &&
+      e.dataTransfer.files[0] &&
+      e.dataTransfer.files[0].type === "application/pdf"
+    ) {
       console.log("I have a file", e.dataTransfer.files);
+      setPdf(e.dataTransfer.files[0]);
       props.setBookPdf(e.dataTransfer.files[0]);
     }
   };
@@ -74,6 +84,7 @@ const AddBookForm = (props: IProps) => {
       // handleFiles(e.target.files);
       props.setBookCover(e.target.files[0]);
     }
+    onImageChange(e);
   };
 
   const handleBookPdf = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,29 +116,39 @@ const AddBookForm = (props: IProps) => {
                 uploadCoverRef.current.click();
             }}
           >
-            <CardContent>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  color: "#27378C",
-                }}
-              >
-                <AddIcon sx={{ color: "#27378C", paddingBottom: "7px" }} />
-                <span style={{ textDecoration: "underline" }}>
-                  Add a Book Cover
-                  <input
-                    type="file"
-                    name="book-cover"
-                    ref={uploadCoverRef}
-                    id="book-cover"
-                    hidden
-                    onChange={handleBookCover}
-                    accept="image/*"
+            <CardContent sx={{ padding: 0 }}>
+              {image !== undefined ? (
+                <div>
+                  <img
+                    alt="book-cover"
+                    src={image}
+                    style={{ width: "100%", height: "100%" }}
                   />
-                </span>
-              </div>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    color: "#27378C",
+                  }}
+                >
+                  <AddIcon sx={{ color: "#27378C", paddingBottom: "7px" }} />
+                  <span style={{ textDecoration: "underline" }}>
+                    Add a Book Cover
+                    <input
+                      type="file"
+                      name="book-cover"
+                      ref={uploadCoverRef}
+                      id="book-cover"
+                      hidden
+                      onChange={handleBookCover}
+                      accept="image/*"
+                    />
+                  </span>
+                </div>
+              )}
             </CardContent>
           </CardActionArea>
         </Card>
@@ -287,6 +308,11 @@ const AddBookForm = (props: IProps) => {
               </div>
             </CardContent>
           </Card>
+          {pdf && (
+            <span style={{ color: "#7A7A7A", paddingBottom: "15px" }}>
+              {`File ${pdf.name} is selected`}
+            </span>
+          )}
           <Button
             style={{
               background: "#27378C",

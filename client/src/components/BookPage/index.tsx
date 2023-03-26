@@ -25,8 +25,10 @@ type IProps = {
 
 const BookData = (props: IProps) => {
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   return props.book !== null ? (
     <div style={{ display: "flex", flexDirection: "row" }}>
       <img
