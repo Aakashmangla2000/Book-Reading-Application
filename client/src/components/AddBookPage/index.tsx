@@ -34,6 +34,8 @@ type IProps = {
   bookDetails: string | number | readonly string[] | undefined;
   timeToRead: string | number | readonly string[] | undefined;
   nameOfBook: string | number | readonly string[] | undefined;
+  setBookCover: React.Dispatch<React.SetStateAction<File | null>>;
+  setBookPdf: React.Dispatch<React.SetStateAction<File | null>>;
 };
 
 const AddBookForm = (props: IProps) => {
@@ -60,62 +62,83 @@ const AddBookForm = (props: IProps) => {
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       // at least one file has been dropped so do something
       // handleFiles(e.dataTransfer.files);
-      console.log("I have a file");
+      console.log("I have a file", e.dataTransfer.files);
+      props.setBookPdf(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleBookCover = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      // at least one file has been selected so do something
+      // handleFiles(e.target.files);
+      props.setBookCover(e.target.files[0]);
+    }
+  };
+
+  const handleBookPdf = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      // at least one file has been selected so do something
+      // handleFiles(e.target.files);
+      props.setBookPdf(e.target.files[0]);
     }
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <Card
-        sx={{
-          width: "425px",
-          height: "615px",
-          margin: "20px",
-          border: "1px dashed #27378C",
-          borderRadius: "8px",
-          boxShadow: "none",
-        }}
-      >
-        <CardActionArea
-          style={{ height: "100%" }}
-          onClick={() => {
-            if (uploadCoverRef.current != null) uploadCoverRef.current.click();
+    <form onSubmit={props.submitBookDetails}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <Card
+          sx={{
+            width: "425px",
+            height: "615px",
+            margin: "20px",
+            border: "1px dashed #27378C",
+            borderRadius: "8px",
+            boxShadow: "none",
           }}
         >
-          <CardContent>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                color: "#27378C",
-              }}
-            >
-              <AddIcon sx={{ color: "#27378C", paddingBottom: "7px" }} />
-              <span style={{ textDecoration: "underline" }}>
-                Add a Book Cover
-                <input
-                  type="file"
-                  name="book-cover"
-                  ref={uploadCoverRef}
-                  id="book-cover"
-                  hidden
-                />
-              </span>
-            </div>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignContent: "flex-start",
-          marginLeft: "44px",
-          width: "850px",
-        }}
-      >
-        <form onSubmit={props.submitBookDetails}>
+          <CardActionArea
+            style={{ height: "100%" }}
+            onClick={() => {
+              if (uploadCoverRef.current != null)
+                uploadCoverRef.current.click();
+            }}
+          >
+            <CardContent>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  color: "#27378C",
+                }}
+              >
+                <AddIcon sx={{ color: "#27378C", paddingBottom: "7px" }} />
+                <span style={{ textDecoration: "underline" }}>
+                  Add a Book Cover
+                  <input
+                    type="file"
+                    name="book-cover"
+                    ref={uploadCoverRef}
+                    id="book-cover"
+                    hidden
+                    onChange={handleBookCover}
+                  />
+                </span>
+              </div>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignContent: "flex-start",
+            marginLeft: "44px",
+            width: "850px",
+          }}
+        >
           <label className={styles.inputLabel}>Name of the Book </label>
           <input
             className={styles.input}
@@ -251,6 +274,7 @@ const AddBookForm = (props: IProps) => {
                       id="pdf-upload"
                       ref={uploadPdfRef}
                       hidden
+                      onChange={handleBookPdf}
                     />
                   </button>
                   <span> or drop file here</span>
@@ -278,9 +302,9 @@ const AddBookForm = (props: IProps) => {
           >
             Add Book
           </Button>
-        </form>
+        </div>
       </div>
-    </div>
+    </form>
   );
 };
 
@@ -298,12 +322,23 @@ function AddBookPage() {
   const [bookDetails, setBookDetails] = useState<
     string | number | readonly string[] | undefined
   >("");
+  const [bookPdf, setBookPdf] = useState<File | null>(null);
+  const [bookCover, setBookCover] = useState<File | null>(null);
   const navigate = useNavigate();
 
   const submitBookDetails = (event: React.FormEvent<HTMLFormElement>) => {
     console.log("Submit");
-    console.log(bookDetails, nameOfAuthor, nameOfBook, timeToRead);
-    addBookData();
+    console.log(
+      bookDetails,
+      nameOfAuthor,
+      nameOfBook,
+      timeToRead,
+      bookCover,
+      bookPdf
+    );
+    if (bookCover === null || bookPdf === null)
+      alert("Book Cover or Pdf is missing");
+    // else addBookData();
     event.preventDefault();
   };
 
@@ -313,11 +348,13 @@ function AddBookPage() {
       name: nameOfBook,
       time_to_read: timeToRead,
       details: bookDetails,
+      bookPdf: bookPdf,
+      bookCover: bookCover,
     };
     try {
       const response = await fetch(`http://localhost:3001/api/books`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        // headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       })
         .then((res) => res.json())
@@ -327,6 +364,8 @@ function AddBookPage() {
           setBookDetails("");
           setNameOfBook("");
           setTimeToRead(0);
+          setBookCover(null);
+          setBookPdf(null);
         });
     } catch (err) {
       console.log(err);
@@ -354,6 +393,8 @@ function AddBookPage() {
         Back to Home
       </Button>
       <AddBookForm
+        setBookPdf={setBookPdf}
+        setBookCover={setBookCover}
         submitBookDetails={submitBookDetails}
         setNameOfAuthor={setNameOfAuthor}
         setNameOfBook={setNameOfBook}
