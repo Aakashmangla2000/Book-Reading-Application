@@ -6,6 +6,8 @@ import { CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
 import AddIcon from "@mui/icons-material/Add";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 type Book = {
   id: number;
@@ -18,17 +20,21 @@ type Book = {
 
 function Home() {
   const [books, setBooks] = useState<Book[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const getBooksData = async () => {
     try {
+      setLoading(true);
       await fetch(`http://localhost:3001/api/books`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data.data);
           setBooks(data.data);
+          setLoading(false);
         });
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   };
@@ -39,6 +45,12 @@ function Home() {
 
   return (
     <div style={{ padding: "30px" }}>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <div
         style={{
           width: "100%",

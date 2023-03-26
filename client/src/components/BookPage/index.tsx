@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
 import styles from "./bookPage.module.css";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Modal from "@mui/material/Modal";
 import Rating from "./Rating";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 type BookPageProps = {
   bookId: string | undefined;
@@ -114,6 +115,12 @@ function BookPage(props: BookPageProps) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", margin: "70px" }}>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <button
         className={styles.backHomeButton}
         onClick={() => {
@@ -123,7 +130,7 @@ function BookPage(props: BookPageProps) {
         <ArrowBackIosIcon sx={{ fontSize: "small" }} />
         <span>Back to Home</span>
       </button>
-      {loading ? "Loading..." : <BookData book={book} />}
+      {loading ? "" : <BookData book={book} />}
     </div>
   );
 }
