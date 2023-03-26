@@ -34,6 +34,8 @@ type IProps = {
   bookDetails: string | number | readonly string[] | undefined;
   timeToRead: string | number | readonly string[] | undefined;
   nameOfBook: string | number | readonly string[] | undefined;
+  bookCover: File | null;
+  bookPdf: File | null;
   setBookCover: React.Dispatch<React.SetStateAction<File | null>>;
   setBookPdf: React.Dispatch<React.SetStateAction<File | null>>;
 };
@@ -50,6 +52,13 @@ const AddBookForm = (props: IProps) => {
       setImage(URL.createObjectURL(event.target.files[0]));
     }
   };
+
+  useEffect(() => {
+    if (image !== undefined && pdf !== undefined) {
+      setImage(undefined);
+      setPdf(undefined);
+    }
+  }, [props.bookCover]);
 
   // handle drag events
   const handleDrag = function (e: DragEvent<HTMLDivElement>) {
@@ -423,6 +432,8 @@ function AddBookPage() {
         Back to Home
       </Button>
       <AddBookForm
+        bookCover={bookCover}
+        bookPdf={bookPdf}
         setBookPdf={setBookPdf}
         setBookCover={setBookCover}
         submitBookDetails={submitBookDetails}

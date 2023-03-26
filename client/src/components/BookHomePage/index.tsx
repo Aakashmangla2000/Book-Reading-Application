@@ -31,10 +31,29 @@ export default function BookHomePage(props: HomePageBookProps) {
         </CardActionArea>
       </Card>
       <div style={{ paddingLeft: "20px" }}>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="div"
+          sx={{
+            width: "190px",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          }}
+        >
           {props.bookName}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            width: "190px",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          }}
+        >
           {props.authors.map(
             (author: string, index: number) =>
               `${author}` + (index === props.authors.length - 1 ? "" : ", ")
