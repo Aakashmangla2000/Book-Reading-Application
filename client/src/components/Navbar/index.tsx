@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { Link } from "react-router-dom";
+import styles from "./navBar.module.css";
 
 const pages = [
   { name: "Home", url: "" },
@@ -22,6 +23,7 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
+  const [currentPage, setCurrentPage] = React.useState("Home");
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -32,10 +34,15 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="transparent">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <MenuBookIcon style={{ color: "#27378C", paddingRight: "5px" }} />
+          <MenuBookIcon
+            style={{
+              color: "#27378C",
+              paddingRight: "5px",
+            }}
+          />
           <Typography
             sx={{
               fontStyle: "italic",
@@ -111,10 +118,21 @@ function Navbar() {
             {pages.map((page) => (
               <Button
                 key={page.name}
-                onClick={handleCloseNavMenu}
+                onClick={() => {
+                  setCurrentPage(page.name);
+                  handleCloseNavMenu();
+                }}
                 sx={{ my: 2, color: "white", display: "block" }}
+                className={styles.navItem}
               >
-                <Link to={`/${page.url}`}>{page.name}</Link>
+                <Link
+                  className={`${styles.link} ${
+                    currentPage === page.name ? styles.linkFocus : ""
+                  }`}
+                  to={`/${page.url}`}
+                >
+                  {page.name}
+                </Link>
               </Button>
             ))}
           </Box>

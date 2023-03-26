@@ -1,0 +1,20 @@
+.navItem {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  text-transform: capitalize;
+  color: #27378c;
+  text-decoration: none;
+}
+
+.link {
+  color: #27378c;
+  text-decoration: none;
+}
+
+.linkFocus {
+  font-weight: 700;
+  text-decoration: underline;
+}

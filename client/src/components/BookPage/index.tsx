@@ -4,6 +4,7 @@ import styles from "./bookPage.module.css";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Modal from "@mui/material/Modal";
+import Rating from "./Rating";
 
 type BookPageProps = {
   bookId: string | undefined;
@@ -49,10 +50,11 @@ const BookData = (props: IProps) => {
           {props.book.authors.map((author) => `${author} `)}
         </span>
         <span className={styles.timeToRead}>
-          Book Read Time: {props.book.time_to_read}
+          Book Read Time: {Math.floor(props.book.time_to_read / 60)} hours{" "}
+          {props.book.time_to_read % 60} minutes
         </span>
         <span className={styles.details}>{props.book.details}</span>
-
+        {/* <Rating /> */}
         <Modal
           open={open}
           onClose={handleClose}

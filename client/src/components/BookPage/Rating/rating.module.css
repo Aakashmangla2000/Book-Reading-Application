@@ -1,0 +1,83 @@
+.heading {
+  font-size: 25px;
+  margin-right: 25px;
+}
+
+.fa {
+  font-size: 25px;
+}
+
+.checked {
+  color: orange;
+}
+
+/* Three column layout */
+.side {
+  float: left;
+  width: 15%;
+  margin-top: 10px;
+}
+
+.middle {
+  margin-top: 10px;
+  float: left;
+  width: 70%;
+}
+
+/* Place text to the right */
+.right {
+  text-align: right;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* The bar container */
+.barContainer {
+  width: 100%;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+}
+
+/* Individual bars */
+.bar5 {
+  width: 60%;
+  height: 18px;
+  background-color: #ffb400;
+}
+.bar4 {
+  width: 30%;
+  height: 18px;
+  background-color: #ffb400;
+}
+.bar3 {
+  width: 10%;
+  height: 18px;
+  background-color: #ffb400;
+}
+.bar2 {
+  width: 4%;
+  height: 18px;
+  background-color: #ffb400;
+}
+.bar1 {
+  width: 15%;
+  height: 18px;
+  background-color: #ffb400;
+}
+
+/* Responsive layout - make the columns stack on top of each other instead of next to each other */
+@media (max-width: 400px) {
+  .side,
+  .middle {
+    width: 100%;
+  }
+  .right {
+    display: none;
+  }
+}

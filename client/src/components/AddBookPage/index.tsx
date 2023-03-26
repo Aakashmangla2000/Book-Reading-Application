@@ -124,6 +124,7 @@ const AddBookForm = (props: IProps) => {
               if (uploadCoverRef.current != null)
                 uploadCoverRef.current.click();
             }}
+            disabled={image !== undefined}
           >
             <CardContent sx={{ padding: 0 }}>
               {image !== undefined ? (
@@ -131,7 +132,11 @@ const AddBookForm = (props: IProps) => {
                   <img
                     alt="book-cover"
                     src={image}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      // objectFit: "cover",
+                    }}
                   />
                 </div>
               ) : (

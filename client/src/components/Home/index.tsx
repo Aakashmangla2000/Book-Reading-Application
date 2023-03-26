@@ -63,7 +63,7 @@ function Home() {
           My Books
         </span>
       </div>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
         {books !== null
           ? books.map((book) => (
               <BookHomePage
