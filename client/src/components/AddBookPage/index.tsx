@@ -124,6 +124,7 @@ const AddBookForm = (props: IProps) => {
                     id="book-cover"
                     hidden
                     onChange={handleBookCover}
+                    accept="image/*"
                   />
                 </span>
               </div>
@@ -275,6 +276,7 @@ const AddBookForm = (props: IProps) => {
                       ref={uploadPdfRef}
                       hidden
                       onChange={handleBookPdf}
+                      accept=".pdf"
                     />
                   </button>
                   <span> or drop file here</span>
@@ -351,22 +353,12 @@ function AddBookPage() {
     body.append("name", nameOfBook as string);
     body.append("time_to_read", timeToRead as string);
     body.append("details", bookDetails as string);
-    body.append("files", bookPdf as File);
-    body.append("files", bookCover as File);
+    body.append("pdf", bookPdf as File);
+    body.append("cover", bookCover as File);
 
-    // const body = {
-    //   authors: (nameOfAuthor as string).split(","),
-    //   name: nameOfBook,
-    //   time_to_read: timeToRead,
-    //   details: bookDetails,
-    //   bookPdf: bookPdf,
-    //   bookCover: bookCover,
-    // };
     try {
       const response = await fetch(`http://localhost:3001/api/books`, {
         method: "POST",
-        // headers: { "Content-Type": "application/json" },
-        // headers: { "Content-Type": "multipart/form-data" },
         body: body,
       })
         .then((res) => res.json())

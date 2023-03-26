@@ -8,6 +8,7 @@ type HomePageBookProps = {
   bookName: string;
   authors: string[];
   book_id: number;
+  bookCoverFilename: string;
 };
 
 export default function BookHomePage(props: HomePageBookProps) {
@@ -24,7 +25,7 @@ export default function BookHomePage(props: HomePageBookProps) {
           <CardMedia
             component="img"
             height="340"
-            src="/HarryPotter.jpg"
+            src={`http://localhost:3001/uploads/${props.bookCoverFilename}`}
             alt="Book Cover"
           />
         </CardActionArea>

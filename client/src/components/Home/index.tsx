@@ -13,6 +13,7 @@ type Book = {
   details: string;
   time_to_read: number;
   authors: Array<string>;
+  book_cover_filename: string;
 };
 
 function Home() {
@@ -70,6 +71,7 @@ function Home() {
                 book_id={book.id}
                 bookName={book.book_name}
                 authors={book.authors}
+                bookCoverFilename={book.book_cover_filename}
               />
             ))
           : ""}
