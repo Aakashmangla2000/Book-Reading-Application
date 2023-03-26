@@ -57,3 +57,50 @@
   text-decoration: underline;
   padding: 0;
 }
+
+.backHomeButton {
+  width: 178px;
+  height: 44px;
+  border: 2px solid #27378c;
+  border-radius: 8px;
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #27378c;
+  align-self: flex-start;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white;
+  margin-left: 20px;
+}
+
+.backHomeButton:hover {
+  background-color: #27388c17;
+}
+
+.addBook {
+  width: 178px;
+  height: 44px;
+  border: 2px solid #27378c;
+  border-radius: 8px;
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: white;
+  align-self: flex-start;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #27378c;
+}
+
+.addBook:hover {
+  background-color: #27388cee;
+}

@@ -1,8 +1,71 @@
 .heading {
-  font-size: 25px;
-  margin-right: 25px;
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.15px;
+  color: rgba(0, 0, 0, 0.7);
+  margin-bottom: 13px;
 }
 
+.divider {
+  width: 1px;
+  height: 159px;
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  margin-right: 20px;
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 43px;
+  padding: 20px;
+  width: 655px;
+}
+
+.secondBox {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rateButton {
+  width: 178px;
+  height: 44px;
+  border: 2px solid #27378c;
+  border-radius: 8px;
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #27378c;
+  align-self: flex-start;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white;
+}
+
+.rateButton:hover {
+  background-color: #27388c17;
+}
+.rateText {
+  text-justify: auto;
+  padding-bottom: 20px;
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #545454;
+}
 .fa {
   font-size: 25px;
 }
@@ -11,66 +74,114 @@
   color: orange;
 }
 
+.firstBox {
+  display: flex;
+  flex-direction: row;
+  width: 45%;
+}
+
+.firstLeft {
+  width: 60%;
+}
+
+.firstRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  margin-top: 20px;
+}
+
 /* Three column layout */
 .side {
   float: left;
-  width: 15%;
-  margin-top: 10px;
+  width: 10%;
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 0.17px;
 }
 
 .middle {
-  margin-top: 10px;
+  margin-top: 8px;
   float: left;
-  width: 70%;
+  width: 90%;
 }
 
-/* Place text to the right */
 .right {
   text-align: right;
 }
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+.row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
-/* The bar container */
 .barContainer {
-  width: 100%;
+  width: 120px;
   background-color: #f1f1f1;
   text-align: center;
   color: white;
 }
 
-/* Individual bars */
 .bar5 {
   width: 60%;
-  height: 18px;
+  height: 8px;
+  border-radius: 2px;
   background-color: #ffb400;
 }
 .bar4 {
   width: 30%;
-  height: 18px;
+  height: 8px;
+  border-radius: 2px;
   background-color: #ffb400;
 }
 .bar3 {
   width: 10%;
-  height: 18px;
+  height: 8px;
+  border-radius: 2px;
   background-color: #ffb400;
 }
 .bar2 {
   width: 4%;
-  height: 18px;
+  height: 8px;
+  border-radius: 2px;
   background-color: #ffb400;
 }
 .bar1 {
   width: 15%;
-  height: 18px;
+  height: 8px;
+  border-radius: 2px;
   background-color: #ffb400;
 }
 
+.uppertext {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  color: rgba(0, 0, 0, 0.87);
+  justify-content: space-between;
+}
+
+.lowertext {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  color: rgba(0, 0, 0, 0.38);
+}
 /* Responsive layout - make the columns stack on top of each other instead of next to each other */
 @media (max-width: 400px) {
   .side,

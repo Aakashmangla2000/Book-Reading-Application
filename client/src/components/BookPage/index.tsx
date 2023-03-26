@@ -54,7 +54,7 @@ const BookData = (props: IProps) => {
           {props.book.time_to_read % 60} minutes
         </span>
         <span className={styles.details}>{props.book.details}</span>
-        {/* <Rating /> */}
+        <Rating />
         <Modal
           open={open}
           onClose={handleClose}
@@ -78,23 +78,9 @@ const BookData = (props: IProps) => {
             height="100%"
           />
         </Modal>
-        <Button
-          style={{
-            background: "#27378C",
-            width: "160px",
-            fontStyle: "normal",
-            fontWeight: 500,
-            fontSize: "16px",
-            lineHeight: "20px",
-            marginBottom: "24px",
-            border: "2px solid #27378C",
-            borderRadius: "8px",
-          }}
-          variant="contained"
-          onClick={handleOpen}
-        >
+        <button className={styles.readButton} onClick={handleOpen}>
           Read this book
-        </Button>
+        </button>
       </div>
     </div>
   ) : (
@@ -128,26 +114,15 @@ function BookPage(props: BookPageProps) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", margin: "70px" }}>
-      <Button
-        style={{
-          color: "#27378C",
-          width: "178px",
-          fontStyle: "normal",
-          fontWeight: 500,
-          fontSize: "16px",
-          lineHeight: "20px",
-          marginBottom: "24px",
-          border: "2px solid #27378C",
-          borderRadius: "8px",
-        }}
-        variant="outlined"
-        startIcon={<ArrowBackIosIcon />}
+      <button
+        className={styles.backHomeButton}
         onClick={() => {
           navigate(`/`);
         }}
       >
-        Back to Home
-      </Button>
+        <ArrowBackIosIcon sx={{ fontSize: "small" }} />
+        <span>Back to Home</span>
+      </button>
       {loading ? "Loading..." : <BookData book={book} />}
     </div>
   );

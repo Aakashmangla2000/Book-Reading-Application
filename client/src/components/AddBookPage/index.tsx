@@ -231,7 +231,6 @@ const AddBookForm = (props: IProps) => {
                 className={styles.input}
                 placeholder="Add time in mins"
                 id="book-read-time"
-                // style={{ width: "100%" }}
                 type="number"
                 name="time"
                 required
@@ -327,23 +326,9 @@ const AddBookForm = (props: IProps) => {
               {`File ${pdf.name} is selected`}
             </span>
           )}
-          <Button
-            style={{
-              background: "#27378C",
-              width: "160px",
-              fontStyle: "normal",
-              fontWeight: 500,
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "24px",
-              border: "2px solid #27378C",
-              borderRadius: "8px",
-            }}
-            variant="contained"
-            type="submit"
-          >
-            Add Book
-          </Button>
+          <button className={styles.addBook} type="submit">
+            <span>Add Book</span>
+          </button>
         </div>
       </div>
     </form>
@@ -360,7 +345,7 @@ function AddBookPage() {
   >("");
   const [timeToRead, setTimeToRead] = useState<
     string | number | readonly string[] | undefined
-  >(0);
+  >(undefined);
   const [bookDetails, setBookDetails] = useState<
     string | number | readonly string[] | undefined
   >("");
@@ -418,24 +403,15 @@ function AddBookPage() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", margin: "70px" }}>
-      <Button
-        style={{
-          color: "#27378C",
-          width: "178px",
-          fontStyle: "normal",
-          fontWeight: 500,
-          fontSize: "16px",
-          lineHeight: "20px",
-          marginBottom: "24px",
-        }}
-        variant="outlined"
-        startIcon={<ArrowBackIosIcon />}
+      <button
+        className={styles.backHomeButton}
         onClick={() => {
           navigate(`/`);
         }}
       >
-        Back to Home
-      </Button>
+        <ArrowBackIosIcon sx={{ fontSize: "small" }} />
+        <span>Back to Home</span>
+      </button>
       <AddBookForm
         bookCover={bookCover}
         bookPdf={bookPdf}
