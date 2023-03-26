@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, DragEvent } from "react";
 import { Button } from "@mui/material";
 import styles from "./addBookPage.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -37,15 +37,50 @@ type IProps = {
 };
 
 const AddBookForm = (props: IProps) => {
+  const uploadCoverRef = useRef<HTMLInputElement>(null);
+  const uploadPdfRef = useRef<HTMLInputElement>(null);
+
+  const [dragActive, setDragActive] = useState(false);
+
+  // handle drag events
+  const handleDrag = function (e: DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = function (e: DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      // at least one file has been dropped so do something
+      // handleFiles(e.dataTransfer.files);
+      console.log("I have a file");
+    }
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
-      <Card sx={{ width: "425px", height: "615px", margin: "20px" }}>
+      <Card
+        sx={{
+          width: "425px",
+          height: "615px",
+          margin: "20px",
+          border: "1px dashed #27378C",
+          borderRadius: "8px",
+          boxShadow: "none",
+        }}
+      >
         <CardActionArea
           style={{ height: "100%" }}
           onClick={() => {
-            redirect(`/addbook`);
+            if (uploadCoverRef.current != null) uploadCoverRef.current.click();
           }}
-          disabled
         >
           <CardContent>
             <div
@@ -53,10 +88,20 @@ const AddBookForm = (props: IProps) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                color: "#27378C",
               }}
             >
-              <AddIcon />
-              <span>Add a Book Cover</span>
+              <AddIcon sx={{ color: "#27378C", paddingBottom: "7px" }} />
+              <span style={{ textDecoration: "underline" }}>
+                Add a Book Cover
+                <input
+                  type="file"
+                  name="book-cover"
+                  ref={uploadCoverRef}
+                  id="book-cover"
+                  hidden
+                />
+              </span>
             </div>
           </CardContent>
         </CardActionArea>
@@ -76,8 +121,8 @@ const AddBookForm = (props: IProps) => {
             className={styles.input}
             required
             placeholder="Enter the published name"
-            id="author-of-book"
-            style={{ width: "100%" }}
+            id="name-of-book"
+            style={{ width: "97%" }}
             type="text"
             name="name-of-book"
             value={props.nameOfBook}
@@ -90,14 +135,14 @@ const AddBookForm = (props: IProps) => {
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              width: "100%",
+              // width: "100%",
             }}
           >
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
-                width: "95%",
+                width: "49%",
               }}
             >
               <label className={styles.inputLabel}>Author of the Book</label>
@@ -105,7 +150,7 @@ const AddBookForm = (props: IProps) => {
                 className={styles.input}
                 placeholder="Add all the authors comma seperated"
                 id="author-of-book"
-                style={{ width: "100%" }}
+                // style={{ width: "100%" }}
                 type="text"
                 name="authors"
                 required
@@ -119,7 +164,7 @@ const AddBookForm = (props: IProps) => {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                width: "95%",
+                width: "49%",
               }}
             >
               <label className={styles.inputLabel}>Book Read Time</label>
@@ -127,7 +172,7 @@ const AddBookForm = (props: IProps) => {
                 className={styles.input}
                 placeholder="Add time in mins"
                 id="book-read-time"
-                style={{ width: "100%" }}
+                // style={{ width: "100%" }}
                 type="number"
                 name="time"
                 required
@@ -150,7 +195,7 @@ const AddBookForm = (props: IProps) => {
               className={styles.input}
               placeholder="Should not be more than 300 words"
               id="book-details"
-              style={{ height: "142px", width: "100%" }}
+              style={{ height: "142px" }}
               rows={4}
               cols={50}
               name="details"
@@ -164,13 +209,56 @@ const AddBookForm = (props: IProps) => {
           </div>
           <label className={styles.inputLabel}>Upload PDF</label>
           <Card
-            className={styles.uploadPdfCard}
-            sx={{ width: "300px", height: "149px" }}
+            className={dragActive ? styles.dragActive : styles.uploadPdfCard}
+            sx={{
+              width: "300px",
+              height: "149px",
+              marginTop: "8px",
+              border: "1px dashed #CCCCCC",
+              borderRadius: "8px",
+              boxShadow: "none",
+            }}
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
           >
             <CardContent>
-              <CloudUploadIcon />
-              <span>Browse or drop file here</span>
-              <span>Supports: PDF; upto 10MB</span>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                  marginTop: "20px",
+                }}
+              >
+                <CloudUploadIcon sx={{ color: "#27378C" }} />
+                <div>
+                  <button
+                    className={styles.browseButton}
+                    type="button"
+                    onClick={() => {
+                      if (uploadPdfRef.current != null)
+                        uploadPdfRef.current.click();
+                    }}
+                  >
+                    Browse
+                    <input
+                      type="file"
+                      name="pdf-upload"
+                      id="pdf-upload"
+                      ref={uploadPdfRef}
+                      hidden
+                    />
+                  </button>
+                  <span> or drop file here</span>
+                </div>
+                <span style={{ color: "#7A7A7A" }}>
+                  Supports: PDF; upto 10MB
+                </span>
+              </div>
             </CardContent>
           </Card>
           <Button
@@ -256,8 +344,6 @@ function AddBookPage() {
           fontSize: "16px",
           lineHeight: "20px",
           marginBottom: "24px",
-          border: "2px solid #27378C",
-          borderRadius: "8px",
         }}
         variant="outlined"
         startIcon={<ArrowBackIosIcon />}

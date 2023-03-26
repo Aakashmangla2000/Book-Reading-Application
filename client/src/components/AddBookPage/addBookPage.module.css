@@ -33,8 +33,27 @@
   font-size: 16px;
   line-height: 20px;
   margin-bottom: 20px;
+  margin-top: 8px;
 }
 
 .uploadPdfCard {
   margin-bottom: 20px;
+}
+
+.dragActive {
+  background-color: #e4e2e2;
+  margin-bottom: 20px;
+}
+
+.browseButton {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  border: none;
+  color: #27378c;
+  background-color: white;
+  text-decoration: underline;
+  padding: 0;
 }
