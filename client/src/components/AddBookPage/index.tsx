@@ -86,7 +86,7 @@ const AddBookForm = (props: IProps) => {
   };
 
   return (
-    <form onSubmit={props.submitBookDetails}>
+    <form onSubmit={props.submitBookDetails} encType="multipart/form-data">
       <div style={{ display: "flex", flexDirection: "row" }}>
         <Card
           sx={{
@@ -338,24 +338,36 @@ function AddBookPage() {
     );
     if (bookCover === null || bookPdf === null)
       alert("Book Cover or Pdf is missing");
-    // else addBookData();
+    else addBookData();
     event.preventDefault();
   };
 
   const addBookData = async () => {
-    const body = {
-      authors: (nameOfAuthor as string).split(","),
-      name: nameOfBook,
-      time_to_read: timeToRead,
-      details: bookDetails,
-      bookPdf: bookPdf,
-      bookCover: bookCover,
-    };
+    const body = new FormData();
+    body.append(
+      "authors",
+      JSON.stringify((nameOfAuthor as string).split(",")) as string
+    );
+    body.append("name", nameOfBook as string);
+    body.append("time_to_read", timeToRead as string);
+    body.append("details", bookDetails as string);
+    body.append("files", bookPdf as File);
+    body.append("files", bookCover as File);
+
+    // const body = {
+    //   authors: (nameOfAuthor as string).split(","),
+    //   name: nameOfBook,
+    //   time_to_read: timeToRead,
+    //   details: bookDetails,
+    //   bookPdf: bookPdf,
+    //   bookCover: bookCover,
+    // };
     try {
       const response = await fetch(`http://localhost:3001/api/books`, {
         method: "POST",
         // headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        // headers: { "Content-Type": "multipart/form-data" },
+        body: body,
       })
         .then((res) => res.json())
         .then((data) => {
