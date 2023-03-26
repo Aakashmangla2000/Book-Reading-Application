@@ -7,6 +7,9 @@
   text-transform: capitalize;
   color: #27378c;
   text-decoration: none;
+  background-color: white;
+  border: none;
+  align-self: center;
 }
 
 .link {

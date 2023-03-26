@@ -32,7 +32,12 @@ const BookData = (props: IProps) => {
   const handleClose = () => setOpen(false);
 
   return props.book !== null ? (
-    <div style={{ display: "flex", flexDirection: "row" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+      }}
+    >
       <img
         style={{ height: "500px" }}
         src={`http://localhost:3001/uploads/${props.book.book_cover_filename}`}
@@ -114,7 +119,14 @@ function BookPage(props: BookPageProps) {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", margin: "70px" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        margin: "70px",
+        flexWrap: "wrap",
+      }}
+    >
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={loading}

@@ -87,7 +87,17 @@ function Home() {
               />
             ))
           : ""}
-        <Card sx={{ width: "190px", height: "272px", margin: "20px" }}>
+        <Card
+          sx={{
+            width: "190px",
+            height: "272px",
+            margin: "20px",
+            border: "1px dashed #27378C",
+            borderRadius: "8px",
+            boxShadow: "none",
+            color: "#27378C",
+          }}
+        >
           <CardActionArea
             style={{ height: "100%" }}
             onClick={() => {

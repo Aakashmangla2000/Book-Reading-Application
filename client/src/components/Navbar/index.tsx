@@ -90,7 +90,7 @@ function Navbar() {
               ))}
             </Menu>
           </Box>
-          <Typography
+          {/* <Typography
             variant="h5"
             noWrap
             component="a"
@@ -105,24 +105,23 @@ function Navbar() {
               color: "inherit",
               textDecoration: "none",
             }}
-          >
-            LOGO
-          </Typography>
+          ></Typography> */}
           <Box
             sx={{
               flexGrow: 2,
               display: { xs: "none", md: "flex" },
               alignItems: "center",
+              justifyContent: "center",
             }}
           >
             {pages.map((page) => (
-              <Button
+              <button
                 key={page.name}
                 onClick={() => {
                   setCurrentPage(page.name);
                   handleCloseNavMenu();
                 }}
-                sx={{ my: 2, color: "white", display: "block" }}
+                // style={{ my: 2, color: "white", display: "block" }}
                 className={styles.navItem}
               >
                 <Link
@@ -133,7 +132,7 @@ function Navbar() {
                 >
                   {page.name}
                 </Link>
-              </Button>
+              </button>
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
