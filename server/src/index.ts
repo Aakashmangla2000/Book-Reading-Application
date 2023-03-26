@@ -2,9 +2,21 @@ import express, { Request, Response } from "express";
 import bodyparser from "body-parser";
 const pool = require("../db/index");
 const cors = require("cors");
+const multer = require("multer");
 
 const app = express();
 const port = 3001;
+
+const storage = multer.diskStorage({
+  destination: function (req: Request, file: File, callback: any) {
+    callback(null, __dirname + "/uploads");
+  },
+  filename: function (req: Request, file: any, callback: any) {
+    callback(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 app.use(cors());
 app.use(bodyparser.urlencoded({ extended: true }));
@@ -55,37 +67,44 @@ type RequestBody = {
   authors: Array<string>;
 };
 
-app.post("/api/books", async (req: Request, res: Response) => {
-  try {
-    const { name, details, time_to_read, authors } = <RequestBody>req.body;
-    const insertBook = await pool.query(
-      `INSERT INTO books (name,details,time_to_read) VALUES ($1, $2, $3) returning id`,
-      [name, details, time_to_read]
-    );
-    const newBookId: number = insertBook.rows[0].id;
-    const newAuthorIds: number[] = await Promise.all(
-      authors.map(async (author): Promise<number> => {
-        const res = await pool.query(
-          `INSERT INTO authors (name) VALUES ('${author}') returning id`
-        );
-        const author_id: number = res.rows[0].id;
-        return author_id;
-      })
-    );
-    newAuthorIds.map(async (author_id) => {
-      return await pool.query(
-        `INSERT INTO books_authors (book_id,author_id) VALUES ($1, $2)`,
-        [newBookId, author_id]
-      );
-    });
-    res.status(201).json({
-      status: "Successfully added new Book",
-    });
-    console.log("Successfully added new Book");
-  } catch (error) {
-    console.log(error);
+app.post(
+  "/api/books",
+  upload.array("files"),
+  async (req: Request, res: Response) => {
+    try {
+      const { name, details, time_to_read, authors } = <RequestBody>req.body;
+      // const insertBook = await pool.query(
+      //   `INSERT INTO books (name,details,time_to_read) VALUES ($1, $2, $3) returning id`,
+      //   [name, details, time_to_read]
+      // );
+      // const newBookId: number = insertBook.rows[0].id;
+      // const newAuthorIds: number[] = await Promise.all(
+      //   authors.map(async (author): Promise<number> => {
+      //     const res = await pool.query(
+      //       `INSERT INTO authors (name) VALUES ('${author}') returning id`
+      //     );
+      //     const author_id: number = res.rows[0].id;
+      //     return author_id;
+      //   })
+      // );
+      // newAuthorIds.map(async (author_id) => {
+      //   return await pool.query(
+      //     `INSERT INTO books_authors (book_id,author_id) VALUES ($1, $2)`,
+      //     [newBookId, author_id]
+      //   );
+      // });
+      console.log(req.body);
+      console.log(req.files);
+      // res.status(201).json({
+      //   status: "Successfully added new Book",
+      // });
+      console.log("Successfully added new Book");
+    } catch (error) {
+      console.log("whyyy");
+      console.log(error, "error");
+    }
   }
-});
+);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
