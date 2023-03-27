@@ -89,7 +89,7 @@ function Home() {
           : ""}
         <Card
           sx={{
-            width: "190px",
+            width: "185px",
             height: "272px",
             margin: "20px",
             border: "1px dashed #27378C",

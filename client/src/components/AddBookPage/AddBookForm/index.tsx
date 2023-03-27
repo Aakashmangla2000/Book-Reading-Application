@@ -16,19 +16,10 @@ export default function AddBookForm(props: IProps) {
 
   const onImageChange = (event: any) => {
     if (event.target.files && event.target.files[0]) {
+      console.log("Imagee");
       setImage(URL.createObjectURL(event.target.files[0]));
     }
   };
-  useEffect(() => {
-    console.log(props.timeToRead);
-  });
-
-  useEffect(() => {
-    if (image !== undefined && pdf !== undefined) {
-      setImage(undefined);
-      setPdf(undefined);
-    }
-  }, [props.bookCover]);
 
   const handleDrag = function (e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
@@ -67,7 +58,6 @@ export default function AddBookForm(props: IProps) {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
       props.setBookPdf(e.target.files[0]);
-      console.log(e.target.files[0]);
       setPdf(e.target.files[0]);
     }
   };
@@ -81,8 +71,21 @@ export default function AddBookForm(props: IProps) {
     props.nameOfBook === undefined ||
     props.nameOfBook === "" ||
     props.timeToRead === undefined ||
+    props.timeToRead < 1 ||
     props.timeToRead === null ||
     props.bookPdf === null;
+
+  useEffect(() => {
+    if (
+      image !== undefined &&
+      pdf !== undefined &&
+      props.bookCover === null &&
+      props.bookPdf === null
+    ) {
+      setImage(undefined);
+      setPdf(undefined);
+    }
+  }, [props.bookCover]);
 
   return (
     <form onSubmit={props.submitBookDetails} encType="multipart/form-data">
@@ -213,6 +216,7 @@ export default function AddBookForm(props: IProps) {
                 type="number"
                 name="time"
                 required
+                min={0}
                 value={props.timeToRead}
                 onChange={(event) => {
                   props.setTimeToRead(parseInt(event.target.value));
