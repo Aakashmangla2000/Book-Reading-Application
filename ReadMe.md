@@ -2,16 +2,15 @@
 Book Reading App
 </h1>
 <p align="center">
-PostgreSQL, Expressjs, React, Nodejs
+PostgreSQL, Express, React, NodeJS, TypeScript
 </p>
 
-<!-- > PERN is a fullstack implementation in PostgreSQL, Expressjs, React, Nodejs. -->
+<!-- > PERN is a fullstack implementation in PostgreSQL, Express, React, NodeJS. -->
 
 ## clone or download
 
 ```terminal
 $ gh repo clone Aakashmangla2000/Book-Reading-Application
-$ yarn # or npm i
 ```
 
 ## project structure
@@ -35,8 +34,8 @@ notice, you need client and server runs concurrently in different terminal sessi
 
 ```terminal
 $ cd client          // go to client folder
-$ npm i    // npm install packages
-$ npm start        // run it locally
+$ npm i             // npm install packages
+$ npm start         // run it locally
 ```
 
 ## Server-side usage(PORT: 3001)
@@ -44,7 +43,7 @@ $ npm start        // run it locally
 ```terminal
 $ cd server   // go to server folder
 $ npm i       // npm install packages
-$ npm start // run it locally
+$ npm start   // run it locally
 ```
 
 ## Database setup (PSQL)
@@ -56,6 +55,8 @@ postgres=# \q
 $ cd server/db
 $ psql --username=postgres library < library.sql
 ```
+
+you might need to change the user details of database in db/index.ts
 
 ## Author
 
