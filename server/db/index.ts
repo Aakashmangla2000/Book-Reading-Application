@@ -8,8 +8,6 @@ const pool = new Pool({
   database: "library",
 });
 
-// module.exports = pool;
-
 module.exports = {
   query: (text: string, params: Array<any>) => pool.query(text, params),
 };
