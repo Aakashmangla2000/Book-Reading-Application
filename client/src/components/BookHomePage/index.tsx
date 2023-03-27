@@ -18,7 +18,6 @@ export default function BookHomePage(props: HomePageBookProps) {
       <Card sx={{ width: "190px", height: "272px", margin: "20px" }}>
         <CardActionArea
           onClick={() => {
-            console.log(props.bookName);
             navigate(`/book/${props.book_id}`);
           }}
         >

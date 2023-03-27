@@ -57,11 +57,16 @@ app.get("/api/book/:bookId", async (req: Request, res: Response) => {
         where books.id = $1 group by books.id`,
       [req.params.bookId]
     );
-    res.status(200).json({
-      status: "success",
-      results: results.rows.length,
-      data: results.rows,
-    });
+    if (results.rows.length === 0) {
+      res.status(404).json({
+        status: "No Record Found",
+      });
+    } else
+      res.status(200).json({
+        status: "success",
+        results: results.rows.length,
+        data: results.rows,
+      });
     console.log("Single Book Data sent successfully");
   } catch (err) {
     res.status(400).json({

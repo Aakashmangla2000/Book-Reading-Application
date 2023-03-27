@@ -30,11 +30,12 @@ function BookPage(props: BookPageProps) {
       await fetch(`http://localhost:3001/api/book/${props.bookId}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log("Book data ", data.data[0]);
+          // console.log("Book data ", data);
           setBook(data.data[0]);
           setLoading(false);
         });
     } catch (err) {
+      navigate("/");
       console.log(err);
     }
   };

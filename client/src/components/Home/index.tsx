@@ -29,7 +29,7 @@ function Home() {
       await fetch(`http://localhost:3001/api/books`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.data);
+          // console.log(data.data);
           setBooks(data.data);
           setLoading(false);
         });

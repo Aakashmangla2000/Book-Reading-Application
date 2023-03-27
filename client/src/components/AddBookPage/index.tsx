@@ -34,15 +34,6 @@ function AddBookPage() {
   const [message, setMessage] = useState("");
 
   const submitBookDetails = (event: React.FormEvent<HTMLFormElement>) => {
-    console.log("Submit");
-    console.log(
-      bookDetails,
-      nameOfAuthor,
-      nameOfBook,
-      timeToRead,
-      bookCover,
-      bookPdf
-    );
     if (bookCover === null || bookPdf === null)
       alert("Book Cover or Pdf is missing");
     else addBookData();
@@ -68,7 +59,7 @@ function AddBookPage() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("Book data ", data);
+          // console.log("Book data ", data);
           setSeverity("success");
           setMessage("Book Added Successfully");
           setOpen(true);
