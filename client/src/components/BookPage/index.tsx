@@ -27,7 +27,7 @@ function BookPage(props: BookPageProps) {
 
   const getBookData = async () => {
     try {
-      await fetch(`http://localhost:3001/api/book/${props.bookId}`)
+      await fetch(`http://localhost:3001/api/v1/books/${props.bookId}`)
         .then((res) => res.json())
         .then((data) => {
           // console.log("Book data ", data);

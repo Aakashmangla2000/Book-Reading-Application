@@ -26,7 +26,7 @@ function Home() {
   const getBooksData = async () => {
     try {
       setLoading(true);
-      await fetch(`http://localhost:3001/api/books`)
+      await fetch(`http://localhost:3001/api/v1/books`)
         .then((res) => res.json())
         .then((data) => {
           // console.log(data.data);

@@ -53,7 +53,7 @@ function AddBookPage() {
     body.append("cover", bookCover as File);
 
     try {
-      const response = await fetch(`http://localhost:3001/api/books`, {
+      const response = await fetch(`http://localhost:3001/api/v1/books`, {
         method: "POST",
         body: body,
       })
