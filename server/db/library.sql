@@ -154,6 +154,7 @@ INSERT INTO public.authors VALUES (35, 'Johann Wolfgang von Goethe');
 INSERT INTO public.authors VALUES (36, 'Tayeb Salih');
 INSERT INTO public.authors VALUES (37, 'William Shakespeare');
 INSERT INTO public.authors VALUES (39, 'Sophocles');
+INSERT INTO public.authors VALUES (40, 'Albert Camus');
 
 
 --
@@ -171,6 +172,7 @@ INSERT INTO public.books VALUES (31, 'Season of Migration to the North', 'Season
 INSERT INTO public.books VALUES (32, 'Hamlet', 'The Tragedy of Hamlet, Prince of Denmark, often shortened to Hamlet, is a tragedy written by William Shakespeare sometime between 1599 and 1601. It is Shakespeare''s longest play, with 29,551 words.', 864, 'cover-1679851114523.jpg', 'pdf-1679851114521.pdf');
 INSERT INTO public.books VALUES (33, 'King Lear', 'King Lear is a tragedy written by William Shakespeare. It is based on the mythological Leir of Britain. King Lear, in preparation for his old age, divides his power and land between two of his daughters. He becomes destitute and insane and a proscribed crux of political machinations.', 768, 'cover-1679851611606.jpg', 'pdf-1679851611601.pdf');
 INSERT INTO public.books VALUES (34, 'Oedipus the King', 'Oedipus Rex, also known by its Greek title, Oedipus Tyrannus, or Oedipus the King, is an Athenian tragedy by Sophocles that was first performed around 429 BC. Originally, to the ancient Greeks, the title was simply Oedipus, as it is referred to by Aristotle in the Poetics.', 176, 'cover-1679851676314.jpg', 'pdf-1679851676311.pdf');
+INSERT INTO public.books VALUES (35, 'The Stranger', 'The Stranger, also published in English as The Outsider, is a 1942 novella written by French author Albert Camus. The first of Camus'' novels published in his lifetime, the story follows Meursault, an indifferent settler in French Algeria, who, weeks after his mother''s funeral, kills an unnamed Arab ', 370, 'cover-1679908287632.jpg', 'pdf-1679908287617.pdf');
 
 
 --
@@ -188,20 +190,21 @@ INSERT INTO public.books_authors VALUES (32, 37);
 INSERT INTO public.books_authors VALUES (34, 39);
 INSERT INTO public.books_authors VALUES (33, 37);
 INSERT INTO public.books_authors VALUES (25, 31);
+INSERT INTO public.books_authors VALUES (35, 40);
 
 
 --
 -- Name: authors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aakashmangla
 --
 
-SELECT pg_catalog.setval('public.authors_id_seq', 39, true);
+SELECT pg_catalog.setval('public.authors_id_seq', 40, true);
 
 
 --
 -- Name: books_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aakashmangla
 --
 
-SELECT pg_catalog.setval('public.books_id_seq', 34, true);
+SELECT pg_catalog.setval('public.books_id_seq', 35, true);
 
 
 --
