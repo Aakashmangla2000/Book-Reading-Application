@@ -43,6 +43,9 @@ app.get("/api/books", async (req: Request, res: Response) => {
     });
     console.log("All Books Data sent successfully");
   } catch (err) {
+    res.status(400).json({
+      status: "failed",
+    });
     console.log(err);
   }
 });
@@ -61,6 +64,9 @@ app.get("/api/book/:bookId", async (req: Request, res: Response) => {
     });
     console.log("Single Book Data sent successfully");
   } catch (err) {
+    res.status(400).json({
+      status: "failed",
+    });
     console.log(err);
   }
 });
@@ -116,6 +122,9 @@ app.post(
       });
       console.log("Successfully added new Book");
     } catch (error) {
+      res.status(400).json({
+        status: "failed",
+      });
       console.log(error, "error");
     }
   }
