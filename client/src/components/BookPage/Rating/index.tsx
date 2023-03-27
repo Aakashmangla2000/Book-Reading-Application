@@ -1,8 +1,7 @@
-import React from "react";
 import styles from "./rating.module.css";
 import StarIcon from "@mui/icons-material/Star";
 
-function Rating() {
+const Rating = () => {
   return (
     <div className={styles.box}>
       <div className={styles.firstBox}>
@@ -83,6 +82,6 @@ function Rating() {
       </div>
     </div>
   );
-}
+};
 
 export default Rating;

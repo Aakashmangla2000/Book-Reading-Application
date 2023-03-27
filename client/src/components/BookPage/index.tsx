@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./bookPage.module.css";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import Modal from "@mui/material/Modal";
-import Rating from "./Rating";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import BookData from "./BookData";
 
 type BookPageProps = {
   bookId: string | undefined;
 };
 
-type Book = {
+export type Book = {
   id: number;
   book_name: string;
   details: string;
@@ -19,79 +18,6 @@ type Book = {
   authors: Array<string>;
   book_cover_filename: string;
   book_pdf_filename: string;
-};
-
-type IProps = {
-  book: Book | null;
-};
-
-const BookData = (props: IProps) => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  return props.book !== null ? (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-      }}
-    >
-      <img
-        style={{ height: "500px" }}
-        src={`http://localhost:3001/uploads/${props.book.book_cover_filename}`}
-        alt="book_cover"
-      />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignContent: "flex-start",
-          marginLeft: "44px",
-        }}
-      >
-        <span className={styles.bookName}>{props.book.book_name}</span>
-        <span className={styles.authorName}>
-          {props.book.authors.map((author) => `${author} `)}
-        </span>
-        <span className={styles.timeToRead}>
-          Book Read Time: {Math.floor(props.book.time_to_read / 60)} hours{" "}
-          {props.book.time_to_read % 60} minutes
-        </span>
-        <span className={styles.details}>{props.book.details}</span>
-        <Rating />
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          sx={{
-            width: "90vw",
-            height: "90vh",
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            margin: "auto",
-          }}
-        >
-          <iframe
-            title="pdf"
-            src={`http://localhost:3001/uploads/${props.book.book_pdf_filename}`}
-            width="100%"
-            height="100%"
-          />
-        </Modal>
-        <button className={styles.readButton} onClick={handleOpen}>
-          Read this book
-        </button>
-      </div>
-    </div>
-  ) : (
-    <></>
-  );
 };
 
 function BookPage(props: BookPageProps) {

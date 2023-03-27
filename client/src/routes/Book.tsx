@@ -1,4 +1,3 @@
-import React from "react";
 import BookPage from "../components/BookPage";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";

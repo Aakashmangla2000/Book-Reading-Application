@@ -82,3 +82,10 @@
   background-color: #27388cee;
   cursor: pointer;
 }
+
+.bookCover {
+  width: 425px;
+  height: 610px;
+  filter: drop-shadow(1.87536px 1.87536px 1.87536px rgba(0, 0, 0, 0.25));
+  border-radius: 11.2522px;
+}

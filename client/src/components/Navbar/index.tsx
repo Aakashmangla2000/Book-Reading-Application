@@ -8,7 +8,6 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { Link } from "react-router-dom";
@@ -90,22 +89,6 @@ function Navbar() {
               ))}
             </Menu>
           </Box>
-          {/* <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          ></Typography> */}
           <Box
             sx={{
               flexGrow: 2,
@@ -121,7 +104,6 @@ function Navbar() {
                   setCurrentPage(page.name);
                   handleCloseNavMenu();
                 }}
-                // style={{ my: 2, color: "white", display: "block" }}
                 className={styles.navItem}
               >
                 <Link
