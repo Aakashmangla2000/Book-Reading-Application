@@ -1,7 +1,6 @@
 import { useState } from "react";
-import styles from "./bookPage.module.css";
+import styles from "../bookPage.module.css";
 import Modal from "@mui/material/Modal";
-
 import { Book } from "..";
 import Rating from "../Rating";
 
@@ -53,7 +52,6 @@ const BookData = (props: IProps) => {
           sx={{
             width: "90vw",
             height: "90vh",
-            position: "absolute",
             top: 0,
             bottom: 0,
             left: 0,

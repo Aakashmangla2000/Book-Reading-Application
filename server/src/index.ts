@@ -4,7 +4,6 @@ const pool = require("../db/index");
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
 
 const app = express();
 const port = 3001;
@@ -32,10 +31,6 @@ app.use(cors());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!!!!");
-});
-
 app.get("/api/books", async (req: Request, res: Response) => {
   try {
     const results = await pool.query(
@@ -46,7 +41,7 @@ app.get("/api/books", async (req: Request, res: Response) => {
       results: results.rows.length,
       data: results.rows,
     });
-    console.log("Data sent successfully");
+    console.log("All Books Data sent successfully");
   } catch (err) {
     console.log(err);
   }
@@ -64,7 +59,7 @@ app.get("/api/book/:bookId", async (req: Request, res: Response) => {
       results: results.rows.length,
       data: results.rows,
     });
-    console.log("Book Data sent successfully");
+    console.log("Single Book Data sent successfully");
   } catch (err) {
     console.log(err);
   }
